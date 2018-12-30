@@ -56,4 +56,5 @@ plugins=(
   git-prompt
   go
   ubuntu
+  fzf
 )
