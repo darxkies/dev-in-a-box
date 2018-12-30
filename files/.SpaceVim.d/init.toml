@@ -98,6 +98,9 @@ name = "leaderf"
 
 [[layers]]
 name = "lsp"
+filetypes = [
+  "go"
+]
 
 [[layers]]
 name = "tmux"

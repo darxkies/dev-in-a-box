@@ -6,6 +6,7 @@ By typing `make` a Docker Container gets started with all the tools necessary to
 
 * tmux prefix is C-j
 * in vi in insert mode type jk to simulate escape  
+* containers on the host can be managed from within the container 
 
 ## Usage
 

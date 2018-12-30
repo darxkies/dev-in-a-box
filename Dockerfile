@@ -5,7 +5,7 @@ ENV GO_VERSION=1.11.4
 SHELL ["/bin/bash", "-c"]
 
 # Install Ubuntu Dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt -y update && apt -y upgrade && apt -y install openssh-server vim neovim curl wget git tmux tmuxinator build-essential lsof zsh htop iotop docker.io strace ltrace sudo dialog xsel xclip mosh iputils-ping net-tools locales man-db python3-pip exuberant-ctags silversearcher-ag nodejs npm tig docker-compose xz-utils software-properties-common plantuml && apt -y clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN DEBIAN_FRONTEND=noninteractive apt -y update && apt -y upgrade && apt -y install psmisc openssh-server vim neovim curl wget git tmux tmuxinator build-essential lsof zsh htop iotop docker.io strace ltrace sudo dialog xsel xclip mosh iputils-ping net-tools locales man-db python3-pip exuberant-ctags silversearcher-ag nodejs npm tig docker-compose xz-utils software-properties-common plantuml && apt -y clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Python Dependencies
 RUN pip3 install -U pip setuptools wheel pyuv neovim 
@@ -73,5 +73,7 @@ RUN mkdir /run/sshd \
       && echo "Port 10022" >> /etc/ssh/sshd_config \
       && echo "PermitRootLogin without-password" >> /etc/ssh/sshd_config \
       && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+RUN mkdir /root/.ssh
 
 CMD ["zsh"]
