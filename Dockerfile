@@ -5,7 +5,7 @@ ENV GO_VERSION=1.11.4
 SHELL ["/bin/bash", "-c"]
 
 # Install Ubuntu dependencies
-RUN DEBIAN_FRONTEND=noninteractive apt -y update && apt -y upgrade && apt -y install vim neovim curl wget git tmux tmuxinator build-essential lsof zsh htop iotop docker.io strace ltrace sudo dialog xsel xclip mosh iputils-ping locales man-db python3-pip exuberant-ctags silversearcher-ag nodejs npm tig docker-compose xz-utils software-properties-common && apt -y clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN DEBIAN_FRONTEND=noninteractive apt -y update && apt -y upgrade && apt -y install openssh-server vim neovim curl wget git tmux tmuxinator build-essential lsof zsh htop iotop docker.io strace ltrace sudo dialog xsel xclip mosh iputils-ping net-tools locales man-db python3-pip exuberant-ctags silversearcher-ag nodejs npm tig docker-compose xz-utils software-properties-common plantuml && apt -y clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install Python dependenciesdependencies
 RUN pip3 install -U pip setuptools wheel pyuv neovim 
@@ -49,16 +49,27 @@ RUN vim --headless +'call dein#install()' +qall
 RUN vim --headless +'e main.go' +':GoInstallBinaries' +qall
 
 # Zsh
-RUN umask g-w,o-w; git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh 
+RUN git clone --depth 1 https://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh 
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting 
 RUN git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k
 
 COPY files/.zshrc /root/.zshrc
+COPY files/tmux.conf /etc/tmux.conf
 
 RUN chsh -s /bin/zsh root
 
-RUN locale-gen en_US.UTF-8
+RUN locale-gen en_US.UTF-8 
 
 WORKDIR /root
 
+SHELL ["/bin/zsh", "-c"]
+
+RUN mkdir /run/sshd \
+      && echo "AllowAgentForwarding yes" >> /etc/ssh/sshd_config \
+      && echo "Port 10022" >> /etc/ssh/sshd_config \
+      && echo "PermitRootLogin without-password" >> /etc/ssh/sshd_config \
+      && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+#      && echo "ListenAddress 127.0.0.1" >> /etc/ssh/sshd_config \
+  #
 CMD ["zsh"]

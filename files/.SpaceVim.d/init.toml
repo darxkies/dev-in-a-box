@@ -79,6 +79,9 @@ name = "lang#javascript"
 name = "lang#markdown"
 
 [[layers]]
+name = "lang#plantuml"
+
+[[layers]]
 name = "lang#sh"
 
 [[layers]]
@@ -107,6 +110,3 @@ name = "ui"
 
 [[layers]]
 name = "unite"
-
-[[layers]]
-name = "lang#plantuml"

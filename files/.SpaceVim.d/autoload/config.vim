@@ -29,7 +29,8 @@ func! config#before() abort
 
   set nowrap
 
-  let g:spacevim_automatic_update = 1
+  let g:spacevim_automatic_update = 0
+  let g:spacevim_terminal_cursor_shape = 0
 
   let g:spacevim_custom_plugins = [
             \ ['posva/vim-vue', {'merged' : 0}],
