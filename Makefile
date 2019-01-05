@@ -7,6 +7,7 @@ start: build
 	-docker run -ti \
 		--privileged \
 		-d \
+		--restart unless-stopped \
 		--network host \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		--name ${NAME} \
