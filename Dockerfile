@@ -1,6 +1,6 @@
-FROM ubuntu:18.10
+FROM ubuntu:19.04
 
-ENV GO_VERSION=1.11.4
+ENV GO_VERSION=1.12.4
 
 SHELL ["/bin/bash", "-c"]
 
@@ -20,7 +20,6 @@ ENV PATH=$PATH:/usr/local/go/bin:$GOBIN
 
 # Install Golang Dependencies
 RUN go get github.com/junegunn/fzf
-RUN go get github.com/sourcegraph/go-langserver
 RUN go get github.com/klauspost/asmfmt/cmd/asmfmt
 RUN go get github.com/derekparker/delve/cmd/dlv
 RUN go get github.com/kisielk/errcheck
@@ -40,6 +39,7 @@ RUN go get github.com/josharian/impl
 RUN go get honnef.co/go/tools/cmd/keyify
 RUN go get github.com/fatih/motion
 RUN go get github.com/koron/iferr
+RUN go get golang.org/x/tools/cmd/gopls
 RUN go build -o $GOBIN/gocode-gomod github.com/stamblerre/gocode
 
 # Install NodeJS Dependencies
@@ -48,7 +48,7 @@ RUN npm install -g import-js --unsafe-perm
 # Install SpaceVim
 RUN curl -sLf https://spacevim.org/install.sh | bash
 COPY files/.SpaceVim.d /root/.SpaceVim.d
-RUN (cd $HOME/.SpaceVim/ && git checkout v1.0.0)
+RUN (cd $HOME/.vim/ && git checkout v1.1.0)
 RUN vim --headless +'call dein#install()' +qall
 RUN vim --headless +'e main.go' +':GoInstallBinaries' +qall
 
